@@ -1,0 +1,48 @@
+/* Custom styles for the presentation */
+@import 'reveal.js/dist/reveal.css';
+@import 'reveal.js/dist/theme/dracula.css';
+
+.reveal,
+.reveal p,
+.reveal li {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", Menlo, Monaco, Consolas, monospace;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
+
+.reveal h1 {
+  font-size: 1.9em;
+}
+
+.reveal h2 {
+  font-size: 1.4em;
+}
+
+.reveal strong {
+  font-weight: 600;
+}
+
+.reveal table {
+  font-size: 0.55em;
+  margin: 0 auto;
+}
+
+.reveal table th,
+.reveal table td {
+  padding: 0.4em 0.8em;
+  border-bottom: 1px solid #44475a;
+  vertical-align: top;
+}
+
+.reveal table code {
+  font-size: 0.9em;
+}

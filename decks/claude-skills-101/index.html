@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Skills 101</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- 1. Title -->
+      <section>
+        <h1>Claude Skills 101</h1>
+        <p>Rick Whalley</p>
+        <p><small>Manchester AI Huddle · April 2026</small></p>
+      </section>
+
+      <!-- 2. The hook -->
+      <section>
+        <h2>Skills are the cheapest piece of harness investment.</h2>
+        <p class="fragment">And the one most people still haven't touched.</p>
+      </section>
+
+      <!-- 3. What a skill actually is -->
+      <section>
+        <h2>What is a skill?</h2>
+        <ul>
+          <li>A markdown file.</li>
+          <li>Frontmatter says <em>when</em> it fires.</li>
+          <li>Body says <em>what to do</em> when it does.</li>
+        </ul>
+        <p class="fragment"><strong>That's it.</strong> No runtime. No SDK. No compile step.</p>
+      </section>
+
+      <!-- 4. The two insights -->
+      <section>
+        <h2>Two things separate good skills from bad</h2>
+        <ol>
+          <li>
+            <strong>Description is a classifier, not documentation.</strong><br />
+            <small>Lead with the trigger phrases. Write for the model, not the reader.</small>
+          </li>
+          <li>
+            <strong>Body is a runbook, not an explanation.</strong><br />
+            <small>Imperative. Numbered. Concrete commands. Explicit "do not" clauses.</small>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 5. Best practices -->
+      <section>
+        <h2>Rules of thumb</h2>
+        <ul>
+          <li>One skill, one job.</li>
+          <li>Keep <code>SKILL.md</code> under ~500 lines.</li>
+          <li>Progressive disclosure — references in sibling files, loaded on demand.</li>
+          <li>Templates go in files, not in prose.</li>
+          <li>Lead the description with explicit trigger phrases.</li>
+          <li>Two smells: <em>never fires</em> → fix the description. <em>Fires but ignored</em> → shorten and make it concrete.</li>
+        </ul>
+      </section>
+
+      <!-- 6. Demo marker -->
+      <section data-background-color="#282a36">
+        <h2>Let's build one →</h2>
+        <p><small>Live demo</small></p>
+      </section>
+
+      <!-- 7. Where skills live -->
+      <section>
+        <h2>Where skills live</h2>
+        <table>
+          <thead>
+            <tr><th>Location</th><th>Scope</th><th>Use for</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>~/.claude/skills/</code></td>
+              <td>Personal</td>
+              <td>Your habits — commits, debugging, shortcuts</td>
+            </tr>
+            <tr>
+              <td><code>.claude/skills/</code></td>
+              <td>Project (in git)</td>
+              <td>Team conventions — review, deploy, glossary</td>
+            </tr>
+            <tr>
+              <td>Plugin-provided</td>
+              <td>Installed packs</td>
+              <td>Third-party skill collections</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="fragment"><small>The project tier is where the leverage is. Checked in, reviewed, inherited by everyone — including every future session.</small></p>
+      </section>
+
+      <!-- 8. Why this compounds -->
+      <section>
+        <h2>The investment that compounds</h2>
+        <ul>
+          <li>Plain markdown. No runtime, no lock-in.</li>
+          <li>Survives harness changes. Survives model changes.</li>
+          <li>Institutional memory as a file tree.</li>
+        </ul>
+        <p class="fragment">The most <em>portable</em> piece of harness investment you can make.</p>
+      </section>
+
+      <!-- 9. Start with one -->
+      <section>
+        <h2>Start with one.</h2>
+        <p>Pick the most boring, repetitive thing you did this week.</p>
+        <p>Write a skill for it by Friday.</p>
+        <p style="margin-top: 2em;">
+          <small>Longer version: <a href="https://fourohfour.dev/insights/claude-skills-101">fourohfour.dev/insights/claude-skills-101</a></small>
+        </p>
+      </section>
+    </div>
+  </div>
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>
