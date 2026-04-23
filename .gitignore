@@ -122,6 +122,7 @@ dist-ssr
 
 # Cloudflare Wrangler
 .wrangler
+.dev.vars
 
 # macOS
 .DS_Store

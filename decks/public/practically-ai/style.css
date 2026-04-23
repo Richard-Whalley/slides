@@ -1,0 +1,157 @@
+@import 'reveal.js/dist/reveal.css';
+@import 'reveal.js/dist/theme/white.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+
+:root {
+  --acn-purple: #a100ff;
+  --acn-black: #000000;
+  --acn-white: #ffffff;
+  --acn-text: #1a1a1a;
+}
+
+.reveal {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--acn-text);
+  font-weight: 400;
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  text-transform: none;
+  color: var(--acn-black);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 0.4em;
+}
+
+.reveal h1 {
+  font-size: 3.4em;
+}
+
+.reveal h2 {
+  font-size: 1.3em;
+  margin-bottom: 0.6em;
+  margin-top: 0;
+}
+
+.reveal h1::after,
+.reveal h2::after {
+  content: '>';
+  color: var(--acn-purple);
+  margin-left: 0.05em;
+  font-weight: 900;
+}
+
+.reveal p,
+.reveal li {
+  font-size: 0.9em;
+  font-weight: 400;
+  color: var(--acn-text);
+  line-height: 1.5;
+}
+
+.reveal a {
+  color: var(--acn-purple);
+  text-decoration: none;
+}
+
+.reveal a:hover {
+  color: var(--acn-purple);
+  text-decoration: underline;
+}
+
+.reveal .progress {
+  color: var(--acn-purple);
+}
+
+.reveal .controls {
+  color: var(--acn-purple);
+}
+
+.reveal .slide-number {
+  background-color: transparent;
+  color: var(--acn-purple);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+/* Title slide treatment */
+.reveal .title-slide h1 {
+  font-size: 4.2em;
+}
+
+.reveal .title-slide .subtitle {
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #555;
+  margin-top: 1em;
+}
+
+.reveal .wordmark {
+  position: absolute;
+  top: 2.5%;
+  left: 4%;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.5em;
+  color: var(--acn-black);
+  letter-spacing: -0.02em;
+}
+
+.reveal .wordmark::after {
+  content: '>';
+  color: var(--acn-purple);
+}
+
+/* Two-column layout */
+.reveal .two-col {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2em;
+  align-items: center;
+  width: 100%;
+}
+
+.reveal .two-col > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  min-width: 0;
+}
+
+.reveal .two-col > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.reveal .two-col > ul li {
+  position: relative;
+  padding-left: 1em;
+  margin-bottom: 0.6em;
+  font-size: 0.75em;
+  line-height: 1.4;
+}
+
+.reveal .two-col > ul li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  color: var(--acn-purple);
+  font-weight: 900;
+}
