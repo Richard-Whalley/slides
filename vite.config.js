@@ -8,7 +8,7 @@ export default defineConfig({
                 main: resolve(__dirname, 'index.html'),
                 epl: resolve(__dirname, 'decks/private/epl/index.html'),
                 'claude-skills-101': resolve(__dirname, 'decks/public/claude-skills-101/index.html'),
-                'practically-ai': resolve(__dirname, 'decks/public/practically-ai/index.html'),
+                'aws-comsum-2026': resolve(__dirname, 'decks/public/aws-comsum-2026/index.html'),
             },
         },
     },

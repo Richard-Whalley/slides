@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Software Factory</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <!-- Shared arrowheads and icons, referenced by every diagram -->
+  <svg class="defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="ah-line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="ah-line" d="M0 0 10 5 0 10z" />
+      </marker>
+      <marker id="ah-steel" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="ah-steel" d="M0 0 10 5 0 10z" />
+      </marker>
+      <marker id="ah-signal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="ah-signal" d="M0 0 10 5 0 10z" />
+      </marker>
+      <marker id="ah-fault" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="ah-fault" d="M0 0 10 5 0 10z" />
+      </marker>
+      <marker id="ah-pass" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path class="ah-pass" d="M0 0 10 5 0 10z" />
+      </marker>
+      <symbol id="tick" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="11" fill="currentColor" />
+        <path d="M6.5 12.5l3.6 3.6 7.4-8" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="human" viewBox="0 0 32 32">
+        <circle cx="16" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="2.4" />
+        <path d="M4 30c0-7 5-11 12-11s12 4 12 11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+      </symbol>
+      <symbol id="doc" viewBox="0 0 26 32">
+        <path d="M2 1h14l8 8v22H2z M16 1v8h8 M7 16h12 M7 21h12 M7 26h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+      </symbol>
+      <symbol id="calendar" viewBox="0 0 36 36">
+        <path d="M4 8h28v25H4z M4 15h28 M11 4v8 M25 4v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" />
+        <path d="M10 21h4 M16 21h4 M22 21h4 M10 27h4 M16 27h4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 1. Title -->
+      <section class="s-title">
+        <div class="title-block">
+          <h1>The Software Factory</h1>
+          <p class="who">Rick Whalley</p>
+          <p class="where">AWS Consumer Summit 2026, Exec and Leadership track</p>
+        </div>
+        <svg class="dia title-line" viewBox="0 0 1152 16" aria-hidden="true">
+          <line class="rail" x1="0" y1="8" x2="1152" y2="8" />
+          <rect x="66" y="0" width="16" height="16" />
+          <rect x="262" y="0" width="16" height="16" />
+          <rect x="458" y="0" width="16" height="16" />
+          <rect x="654" y="0" width="16" height="16" />
+          <rect x="850" y="0" width="16" height="16" />
+          <rect x="1046" y="0" width="16" height="16" />
+        </svg>
+        <aside class="notes">
+          <p><strong>0:00–0:10.</strong> Title card. No script.</p>
+        </aside>
+      </section>
+
+      <!-- 2. The problem -->
+      <section class="s-problem">
+        <div class="tiles fragment custom">
+          <article class="pr v1" style="--i:0">
+            <p class="pr-title"><span class="pr-num">#2041</span> Add payee endpoint</p>
+            <code>POST /payees</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> All checks passed</p>
+          </article>
+          <article class="pr v2" style="--i:1">
+            <p class="pr-title"><span class="pr-num">#2042</span> Transaction history</p>
+            <code>GET /api/v2/getTxns</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> 14/14 passing</p>
+          </article>
+          <article class="pr v3" style="--i:2">
+            <p class="pr-title"><span class="pr-num">#2043</span> Update account address</p>
+            <code>POST /address.update</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> Build green</p>
+          </article>
+          <article class="pr v4" style="--i:3">
+            <p class="pr-title"><span class="pr-num">#2044</span> Payment retry</p>
+            <code>log.info("retry", id)</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> All checks passed</p>
+          </article>
+          <article class="pr v5" style="--i:4">
+            <p class="pr-title"><span class="pr-num">#2045</span> Balance enquiry</p>
+            <code>console.log(customer)</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> Tests pass</p>
+          </article>
+          <article class="pr v6" style="--i:5">
+            <p class="pr-title"><span class="pr-num">#2046</span> Statement export</p>
+            <code>logger.debug(req.body)</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> 31/31 passing</p>
+          </article>
+          <article class="pr v4" style="--i:6">
+            <p class="pr-title"><span class="pr-num">#2047</span> Standing order setup</p>
+            <code>throw new LimitError()</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> Build green</p>
+          </article>
+          <article class="pr v1" style="--i:7">
+            <p class="pr-title"><span class="pr-num">#2048</span> FX quote</p>
+            <code>return { ok: false, err }</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> All checks passed</p>
+          </article>
+          <article class="pr v6" style="--i:8">
+            <p class="pr-title"><span class="pr-num">#2049</span> Card freeze</p>
+            <code>catch (e) { return null }</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> Tests pass</p>
+          </article>
+          <article class="pr v5" style="--i:9">
+            <p class="pr-title"><span class="pr-num">#2050</span> Account closure</p>
+            <code>DELETE /accounts/{id}</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> 9/9 passing</p>
+          </article>
+          <article class="pr v2" style="--i:10">
+            <p class="pr-title"><span class="pr-num">#2051</span> Limit override</p>
+            <code>print(f"by {user.email}")</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> Build green</p>
+          </article>
+          <article class="pr v3" style="--i:11">
+            <p class="pr-title"><span class="pr-num">#2052</span> Dispute submission</p>
+            <code>res.json({ error })</code>
+            <p class="pr-ok"><svg><use href="#tick" /></svg> All checks passed</p>
+          </article>
+        </div>
+        <h2 class="verdict fragment">Individually impressive.<br />Collectively ungoverned.</h2>
+        <aside class="notes">
+          <p><strong>0:10–2:00.</strong> Click 1: the tiles land, on the demo moment. Click 2: headline, as I say the line.</p>
+          <p>Every engineering organisation in this room has AI coding tools in the hands of its developers by now. And I'd guess most of you have seen the same two things.</p>
+          <p>The first is the demo moment. A developer shows you a function written in seconds, a test suite generated from a description, a refactor that would have taken an afternoon done before the coffee's cold. It is impressive. It's real.</p>
+          <p>The second thing is quieter and takes longer to show up. A new endpoint that's patterned differently from the rest of the service. A pull request that passes every test and quietly violates three architecture decisions your teams spent months agreeing. Logs that leak customer data because nobody told the tool that was a rule. The tool didn't know. Left alone, it can't know. Every session starts from zero, with no memory of your standards, your security posture, your architecture, or what the last ten services look like.</p>
+          <p>So at the level of an individual developer, you get speed. At the level of an organisation, every piece is impressive on its own and the whole doesn't hold together. It's inconsistent. It's hard to audit. It's disconnected from the standards you actually care about. Individually impressive. Collectively ungoverned.</p>
+          <p>And that's the gap I want to talk about. Not whether these tools are fast. They are. Whether you can govern that speed across a whole organisation.</p>
+        </aside>
+      </section>
+
+      <!-- 3. The factory insight -->
+      <section class="s-insight">
+        <h2>The standard travels with the tooling.</h2>
+        <svg class="dia" viewBox="0 0 1152 490" role="img" aria-label="A CI pipeline above the agentic production line, which takes ADRs, security constraints and testing strategy as inputs to the build station">
+          <text class="cap" x="0" y="18">The pipeline you already run</text>
+          <line class="rail" x1="0" y1="68" x2="966" y2="68" marker-end="url(#ah-line)" />
+          <rect class="box" x="0" y="36" width="148" height="64" />
+          <text class="lbl" x="74" y="68">Commit</text>
+          <rect class="box-signal" x="196" y="36" width="148" height="64" />
+          <text class="lbl" x="270" y="68">Lint</text>
+          <rect class="box" x="392" y="36" width="148" height="64" />
+          <text class="lbl" x="466" y="68">Test</text>
+          <rect class="box" x="588" y="36" width="148" height="64" />
+          <text class="lbl" x="662" y="68">Build</text>
+          <rect class="box" x="784" y="36" width="148" height="64" />
+          <text class="lbl" x="858" y="68">Deploy</text>
+          <text class="t-signal" x="196" y="132">Nobody remembers to run this; it just runs</text>
+
+          <g class="fragment">
+            <text class="cap" x="0" y="390">The same move, for AI-assisted delivery</text>
+            <line class="rail" x1="0" y1="442" x2="1150" y2="442" marker-end="url(#ah-line)" />
+            <rect class="box" x="0" y="410" width="148" height="64" />
+          <text class="lbl" x="74" y="442">Foundations</text>
+          <rect class="box" x="196" y="410" width="148" height="64" />
+          <text class="lbl" x="270" y="442">Analyse</text>
+          <rect class="box" x="392" y="410" width="148" height="64" />
+          <text class="lbl" x="466" y="442">Design</text>
+          <rect class="box" x="588" y="410" width="148" height="64" />
+          <text class="lbl" x="662" y="442">Build</text>
+          <rect class="box" x="784" y="410" width="148" height="64" />
+          <text class="lbl" x="858" y="442">Verify</text>
+          <rect class="box" x="980" y="410" width="148" height="64" />
+          <text class="lbl" x="1054" y="442">Operate</text>
+          </g>
+          <g class="fragment">
+            <line class="wire-signal" x1="436" y1="308" x2="632" y2="404" marker-end="url(#ah-signal)" />
+            <rect class="slice" x="386" y="262" width="100" height="46" />
+            <text class="lbl" x="436" y="285">ADRs</text>
+          </g>
+          <g class="fragment">
+            <line class="wire-signal" x1="617" y1="308" x2="662" y2="404" marker-end="url(#ah-signal)" />
+            <rect class="slice" x="502" y="262" width="230" height="46" />
+            <text class="lbl" x="617" y="285">Security constraints</text>
+          </g>
+          <g class="fragment">
+            <line class="wire-signal" x1="843" y1="308" x2="692" y2="404" marker-end="url(#ah-signal)" />
+            <rect class="slice" x="748" y="262" width="190" height="46" />
+            <text class="lbl" x="843" y="285">Testing strategy</text>
+          </g>
+        </svg>
+        <aside class="notes">
+          <p><strong>2:00–3:25.</strong> Click 1: the agentic line, on "that is exactly the move we've made". Clicks 2–4: ADRs, security constraints, testing strategy, as I name them.</p>
+          <p>The question we started with a little over a year ago was: what would it take to turn that into a factory?</p>
+          <p>Not factory in the sense of rigid or bureaucratic. Factory in the engineering sense. Opinionated tooling. An ordered process. Quality standards built into the machines themselves rather than held in the operator's memory.</p>
+          <p>You already run one of these. Think about a CI pipeline. Nobody asks engineers to remember to run the linter. Nobody puts it on a checklist. It's wired in, it runs every time, for everyone, and it enforces the same standard. The standard travels with the tooling.</p>
+          <p>That is exactly the move we've made for AI-assisted delivery. Your architecture decisions, your security constraints, your testing strategy: instead of documents that a developer might read and a tool will never see, they become behaviour the agent actually exhibits. Contract-first ordering isn't a wiki page — it's the order the build step follows. No customer data in logs isn't a code review comment — it's a constraint injected into every single build.</p>
+          <p>That's the insight. Everything else I'm going to show you is built on it.</p>
+        </aside>
+      </section>
+
+      <!-- 4. The coverage map -->
+      <section class="s-coverage">
+        <h2>Where Kiro stops, and where the factory starts</h2>
+        <svg class="dia" viewBox="0 0 1152 470" role="img" aria-label="A six-station production line. Kiro covers Design and Agentic build. The harness covers all six stations.">
+          <g class="fragment" data-fragment-index="1">
+            <rect class="band-signal" x="206" y="78" width="794" height="300" />
+            <text class="title t-signal" x="228" y="118">The harness</text>
+          </g>
+          <g class="fragment" data-fragment-index="0">
+            <rect class="band-plain" x="468" y="142" width="270" height="216" />
+            <text class="title" x="486" y="178">Kiro</text>
+          </g>
+
+          <text class="cap sm" x="0" y="150">Where the business lives</text>
+          <use class="c-steel" href="#doc" x="0" y="184" width="26" height="32" />
+          <text x="38" y="206" style="font-size:17px">Policy document</text>
+          <use class="c-steel" href="#doc" x="0" y="244" width="26" height="32" />
+          <text x="38" y="266" style="font-size:17px">Product requirement</text>
+          <use class="c-steel" href="#doc" x="0" y="304" width="26" height="32" />
+          <text x="38" y="326" style="font-size:17px">Jira epic</text>
+
+          <line class="rail" x1="196" y1="260" x2="1008" y2="260" marker-end="url(#ah-line)" />
+          <rect class="box" x="222" y="200" width="112" height="120" />
+          <text class="lbl lbl-sm" x="278" y="260">Foundations</text>
+          <rect class="box" x="352" y="200" width="112" height="120" />
+          <text class="lbl lbl-sm" x="408" y="260">Analyse</text>
+          <rect class="box" x="482" y="200" width="112" height="120" />
+          <text class="lbl lbl-sm" x="538" y="260">Design</text>
+          <rect class="box" x="612" y="200" width="112" height="120" />
+          <text class="lbl lbl-sm" x="668" y="248">Agentic</text>
+          <text class="lbl lbl-sm" x="668" y="272">build</text>
+          <rect class="box" x="742" y="200" width="112" height="120" />
+          <text class="lbl lbl-sm" x="798" y="260">Verify</text>
+          <rect class="box" x="872" y="200" width="112" height="120" />
+          <text class="lbl lbl-sm" x="928" y="260">Operate</text>
+
+          <use class="c-pass" href="#tick" x="1016" y="241" width="38" height="38" />
+          <text x="1064" y="243" style="font-size:17px">Verified,</text>
+          <text x="1064" y="265" style="font-size:17px">deployable</text>
+          <text x="1064" y="287" style="font-size:17px">increment</text>
+        </svg>
+        <aside class="notes">
+          <p><strong>3:25–5:50.</strong> Click 1: the Kiro band, on "maps onto the middle of our production line". Click 2: the harness band, on "but look at the two ends of the line".</p>
+          <p>We've built this on Kiro. When I say the harness, I mean the layer we've built around the agent: the skills, the checks and the gates that turn a coding tool into a production line. Six stations: foundations, analyse, design, build, verify, operate. Engineers drive it from the Kiro CLI or the Kiro IDE. The choice is theirs, and the harness is the same either way. I want to separate what Kiro gives you out of the box from what we've had to add.</p>
+          <p>Kiro's core idea is spec-driven development: requirements, design, tasks, in that order, before any code. It's the right idea, and it maps onto the middle of our production line. Specs cover design. The agent covers build. Steering files carry your standing context. Hooks let you automate behaviour at specific moments. It's a good substrate, and it's why we chose it.</p>
+          <p>But look at the two ends of the line.</p>
+          <p>On the left, before the spec, is where the business lives. Somebody has a policy document, a product requirement, a Jira ticket that represents a whole initiative. Getting from there to a specification precise enough to delegate a build from is real work: decomposing into epics and features, generating acceptance criteria at every level, checking the spec for coverage and coherence before anyone designs anything. Kiro works one feature spec at a time. It doesn't take an initiative and carry it across a system of services. The harness does. A skill that elaborates business requirements into acceptance criteria. A scorecard that checks whether a spec is ready to build from. A stage gate where the team agrees the scope before design begins.</p>
+          <p>Testing moves left with it too. The functional and non-functional test scenarios are derived from those acceptance criteria before a line of code exists. Not written after the build to see what it does. Written before, to say what it must do.</p>
+        </aside>
+      </section>
+
+      <!-- 5. One quality specification -->
+      <section class="s-spec">
+        <h2>One quality specification, running in both directions.</h2>
+        <svg class="dia" viewBox="0 0 1152 470" role="img" aria-label="One acceptance criteria document. One arrow governs what gets built; another, from the same document, verifies what was produced.">
+          <path class="box-signal" d="M40 20H344L380 56V330H40Z" />
+          <path class="wire-signal" d="M344 20V56H380" />
+          <text class="title" x="66" y="72">Acceptance criteria</text>
+          <text class="cap sm" x="66" y="122">AC-31</text>
+          <text x="66" y="150">A payment over £10,000</text>
+          <text x="66" y="175">needs a second approver.</text>
+          <rect class="ghost" x="66" y="212" width="250" height="7" />
+          <rect class="ghost" x="66" y="238" width="200" height="7" />
+          <rect class="ghost" x="66" y="264" width="270" height="7" />
+          <rect class="ghost" x="66" y="290" width="170" height="7" />
+
+          <line class="wire-signal" x1="380" y1="125" x2="772" y2="125" marker-end="url(#ah-signal)" />
+          <text class="mid" x="576" y="106">governs what gets built</text>
+          <rect class="box" x="780" y="50" width="372" height="150" />
+          <text class="title" x="806" y="94">The build</text>
+          <text class="cap sm" x="806" y="128">Build instruction</text>
+          <text x="806" y="154">A payment over £10,000</text>
+          <text x="806" y="179">needs a second approver.</text>
+
+          <path class="wire-signal" d="M210 330V345Q210 365 230 365H772" marker-end="url(#ah-signal)" />
+          <text class="mid" x="500" y="346">verifies what was produced</text>
+          <rect class="box" x="780" y="290" width="372" height="150" />
+          <text class="title" x="806" y="334">The test suites</text>
+          <text class="cap sm" x="806" y="368">Test scenario</text>
+          <text x="806" y="394">A payment over £10,000</text>
+          <text x="806" y="419">needs a second approver.</text>
+        </svg>
+        <aside class="notes">
+          <p><strong>5:50–7:05.</strong> No builds.</p>
+          <p>The acceptance criteria written in Analyse are the same artefact that drives the build, and the same artefact the test suites verify against. One quality specification, running in both directions: governing what gets built, and verifying what was produced. Precision at that stage is what makes confident delegation possible later. Vagueness there propagates forward as defects.</p>
+          <p>On the right, after the build, Kiro hands you code. The harness runs the full test suites against it, functional and non-functional. It remediates defects inside a governed loop. Then it runs a formal verification pass across correctness, alignment, trust and risk before anything is cleared to deploy.</p>
+          <p>So the short version for this room: Kiro gets you from a spec to working code. The factory gets you from a business requirement to a verified, deployable increment. And there's one more piece that makes that hold across a whole system rather than one service at a time. I want to spend longest on that one.</p>
+        </aside>
+      </section>
+
+      <!-- 6. The inversion -->
+      <section class="s-inversion">
+        <h2>The inversion</h2>
+        <svg class="dia" viewBox="0 0 1152 500" role="img" aria-label="The usual model: five separate services with informal coordination. The meta-repo model: one meta-repo containing five uniform services joined by contracts.">
+          <text class="title cap" x="0" y="24">The usual model</text>
+
+          <path class="faint" d="M60 152L125 296" />
+          <path class="faint" d="M225 152L295 296" />
+          <path class="faint" d="M390 152L335 296" />
+          <path class="faint" d="M120 88H165 M285 88H330 M200 328H250" />
+          <text class="cap it" x="108" y="232">Confluence</text>
+          <text class="cap it" x="258" y="192">someone's head</text>
+          <text class="cap it" x="374" y="240">design doc,</text>
+          <text class="cap it" x="368" y="262">six months stale</text>
+
+          <g>
+            <rect class="box" x="0" y="60" width="120" height="56" />
+            <text class="lbl" x="60" y="88">Accounts</text>
+            <rect class="rail" x="0" y="124" width="50" height="22" />
+            <text class="cap xs mid" x="25" y="139">repo</text>
+            <rect class="rail" x="54" y="124" width="66" height="22" />
+            <text class="cap xs mid" x="87" y="139">pipeline</text>
+          </g>
+          <g>
+            <rect class="box" x="165" y="60" width="120" height="56" />
+            <text class="lbl" x="225" y="88">Payments</text>
+            <rect class="rail" x="165" y="124" width="50" height="22" />
+            <text class="cap xs mid" x="190" y="139">repo</text>
+            <rect class="rail" x="219" y="124" width="66" height="22" />
+            <text class="cap xs mid" x="252" y="139">pipeline</text>
+          </g>
+          <g>
+            <rect class="box" x="330" y="60" width="120" height="56" />
+            <text class="lbl" x="390" y="88">Ledger</text>
+            <rect class="rail" x="330" y="124" width="50" height="22" />
+            <text class="cap xs mid" x="355" y="139">repo</text>
+            <rect class="rail" x="384" y="124" width="66" height="22" />
+            <text class="cap xs mid" x="417" y="139">pipeline</text>
+          </g>
+          <g>
+            <rect class="box" x="80" y="300" width="120" height="56" />
+            <text class="lbl" x="140" y="328">Fraud</text>
+            <rect class="rail" x="80" y="364" width="50" height="22" />
+            <text class="cap xs mid" x="105" y="379">repo</text>
+            <rect class="rail" x="134" y="364" width="66" height="22" />
+            <text class="cap xs mid" x="167" y="379">pipeline</text>
+          </g>
+          <g>
+            <rect class="box" x="250" y="300" width="120" height="56" />
+            <text class="lbl" x="310" y="328">Alerts</text>
+            <rect class="rail" x="250" y="364" width="50" height="22" />
+            <text class="cap xs mid" x="275" y="379">repo</text>
+            <rect class="rail" x="304" y="364" width="66" height="22" />
+            <text class="cap xs mid" x="337" y="379">pipeline</text>
+          </g>
+
+          <g class="fragment">
+            <text class="title cap" x="560" y="24">The meta-repo model</text>
+            <rect class="frame" x="560" y="44" width="592" height="446" />
+            <text class="title t-signal" x="582" y="80">meta-repo</text>
+
+            <rect class="slice" x="582" y="96" width="80" height="30" />
+            <text class="sm mid" x="622" y="116">harness</text>
+            <rect class="slice" x="670" y="96" width="170" height="30" />
+            <text class="sm mid" x="755" y="116">organisation context</text>
+            <rect class="slice" x="848" y="96" width="62" height="30" />
+            <text class="sm mid" x="879" y="116">ADRs</text>
+            <rect class="slice" x="918" y="96" width="62" height="30" />
+            <text class="sm mid" x="949" y="116">NFRs</text>
+            <rect class="slice" x="988" y="96" width="142" height="30" />
+            <text class="sm mid" x="1059" y="116">service templates</text>
+            <rect class="slice" x="582" y="134" width="188" height="30" />
+            <text class="sm mid" x="676" y="154">cross-cutting concerns</text>
+            <rect class="slice" x="778" y="134" width="110" height="30" />
+            <text class="sm mid" x="833" y="154">factory plan</text>
+            <line class="wire-signal" x1="560" y1="182" x2="1152" y2="182" opacity="0.5" />
+
+            <path class="wire" d="M736 246H786 M926 246H976 M666 273L741 385 M836 273L781 385 M876 273L931 385 M1046 273L971 385 M831 412H881" />
+            <rect class="box" x="596" y="219" width="140" height="54" />
+          <text class="lbl" x="666" y="246">Accounts</text>
+            <rect class="box" x="786" y="219" width="140" height="54" />
+          <text class="lbl" x="856" y="246">Payments</text>
+            <rect class="box" x="976" y="219" width="140" height="54" />
+          <text class="lbl" x="1046" y="246">Ledger</text>
+            <rect class="box" x="691" y="385" width="140" height="54" />
+          <text class="lbl" x="761" y="412">Fraud</text>
+            <rect class="box" x="881" y="385" width="140" height="54" />
+          <text class="lbl" x="951" y="412">Alerts</text>
+            <text class="cap sm mid" x="856" y="470">solid lines are contracts</text>
+          </g>
+        </svg>
+        <aside class="notes">
+          <p><strong>7:05–8:25.</strong> Click 1: the meta-repo column, on "we inverted it".</p>
+          <p>Most engineering organisations treat the microservice as the primary unit. Each service is independent: owned by a team, with its own repository and its own pipeline. The macro tends to be informal — how those services compose into a system, what the contracts between them are, what the whole thing is supposed to do. It lives in Confluence, in people's heads, in the design document that was accurate six months ago. Services are independent. Their coordination is emergent.</p>
+          <p>That was always a weakness. With autonomous build agents, it becomes the weakness. Because an agent building one service has no idea what the other four are doing unless somebody tells it, every time.</p>
+          <p>We inverted it. The meta-repo is the primary unit. Services are composable components of it. The meta-repo holds the harness itself. It holds the organisation's context: the ADRs, the non-functional requirements, the service templates, the cross-cutting concerns. And for each increment it holds the factory plan — the macro-level implementation plan for the whole system.</p>
+          <p>I want to give you three concrete benefits of that inversion.</p>
+        </aside>
+      </section>
+
+      <!-- 7. Benefit one: context management -->
+      <section class="s-context">
+        <h2>The agent's scarce resource is context.</h2>
+        <svg class="dia" viewBox="0 0 1152 500" role="img" aria-label="One factory plan fans out into five per-service plans, each a slice of the same document.">
+          <rect class="slice" x="226" y="0" width="700" height="150" />
+          <text class="title t-signal" x="252" y="42">Factory plan</text>
+          <rect class="mark" x="252" y="67" width="8" height="8" />
+          <text x="272" y="77">System acceptance criteria</text>
+          <rect class="mark" x="252" y="93" width="8" height="8" />
+          <text x="272" y="103">Service contracts</text>
+          <rect class="mark" x="252" y="119" width="8" height="8" />
+          <text x="272" y="129">Event schemas</text>
+          <rect class="mark" x="600" y="67" width="8" height="8" />
+          <text x="620" y="77">Dependency graph</text>
+          <rect class="mark" x="600" y="93" width="8" height="8" />
+          <text x="620" y="103">Deployment order</text>
+
+          <g class="fragment">
+            <path class="wire-signal" d="M576 150C576 205 110 190 110 244" marker-end="url(#ah-signal)" />
+            <path class="wire-signal" d="M576 150C576 205 343 190 343 244" marker-end="url(#ah-signal)" />
+            <path class="wire-signal" d="M576 150V244" marker-end="url(#ah-signal)" />
+            <path class="wire-signal" d="M576 150C576 205 809 190 809 244" marker-end="url(#ah-signal)" />
+            <path class="wire-signal" d="M576 150C576 205 1042 190 1042 244" marker-end="url(#ah-signal)" />
+
+            <rect class="box" x="10" y="250" width="200" height="122" />
+            <text class="lbl" x="110" y="276">Accounts</text>
+            <rect class="slice" x="26" y="306" width="168" height="50" />
+            <text class="sm mid" x="110" y="336">Per-service plan</text>
+
+            <rect class="box" x="243" y="250" width="200" height="122" />
+            <text class="lbl" x="343" y="276">Payments</text>
+            <rect class="slice" x="259" y="306" width="168" height="50" />
+            <text class="sm mid" x="343" y="336">Per-service plan</text>
+
+            <rect class="box" x="476" y="250" width="200" height="122" />
+            <text class="lbl" x="576" y="276">Ledger</text>
+            <rect class="slice" x="492" y="306" width="168" height="50" />
+            <text class="sm mid" x="576" y="336">Per-service plan</text>
+
+            <rect class="box" x="709" y="250" width="200" height="122" />
+            <text class="lbl" x="809" y="276">Fraud</text>
+            <rect class="slice" x="725" y="306" width="168" height="50" />
+            <text class="sm mid" x="809" y="336">Per-service plan</text>
+
+            <rect class="box" x="942" y="250" width="200" height="122" />
+            <text class="lbl" x="1042" y="276">Alerts</text>
+            <rect class="slice" x="958" y="306" width="168" height="50" />
+            <text class="sm mid" x="1042" y="336">Per-service plan</text>
+          </g>
+
+          <use class="c-steel" href="#human" x="10" y="424" width="52" height="52" />
+          <path class="icon" d="M74 440h32v40H74z M82 434h16v10H82z M81 456h18 M81 464h18 M81 472h10" />
+          <text class="cap sm" x="124" y="450">Left to individual developers</text>
+          <text class="it" x="124" y="477" style="font-size:21px">whatever they remembered to paste in</text>
+        </svg>
+        <aside class="notes">
+          <p><strong>8:25–9:55.</strong> Click 1: the fan-out, on "from that one plan, a per-service plan is derived".</p>
+          <p>The scarce resource for an AI agent is not intelligence. It's context. What does it know about your world at the moment it starts work? Left to individual developers, the answer is: whatever they remembered to paste in. Which varies by developer, by day, by how much of a hurry they were in.</p>
+          <p>In the meta-repo model, the whole picture lives in one place. The system-level acceptance criteria. The contracts between services. The shared event schemas. The dependency graph. The deployment order. From that one plan, a per-service plan is derived and pushed to each service's branch. When an agent builds a service, it receives a complete brief derived from the same source of truth as every other service in the increment. It knows what to build, what contracts to honour, and what its place in the system is.</p>
+          <p>That's the difference between an agent that is fast and an agent that is fast and right. The context problem isn't solved by a bigger model. It's solved by having a place where the whole system is described, and a mechanism that delivers the right fragment of it to every build.</p>
+        </aside>
+      </section>
+
+      <!-- 8. Benefit two: control of change and deployment -->
+      <section class="s-change">
+        <h2>Change once. Propagate everywhere.</h2>
+        <svg class="dia" viewBox="0 0 1152 470" role="img" aria-label="A new field on a shared event. In the usual model it lands in four repositories at four different times. In the meta-repo model it changes once and propagates to four services, then deploys in a numbered sequence behind a stage gate.">
+          <text class="title cap" x="0" y="24">The usual model</text>
+          <text class="cap xs" x="96" y="56">time</text>
+          <line class="rail" x1="130" y1="52" x2="396" y2="52" marker-end="url(#ah-line)" />
+          <text x="0" y="96">Accounts</text>
+          <line class="rail" x1="96" y1="90" x2="400" y2="90" />
+          <circle class="dot-signal" cx="150" cy="90" r="9" />
+          <text x="0" y="146">Ledger</text>
+          <line class="rail" x1="96" y1="140" x2="400" y2="140" />
+          <circle class="dot-signal" cx="225" cy="140" r="9" />
+          <text x="0" y="196">Fraud</text>
+          <line class="rail" x1="96" y1="190" x2="400" y2="190" />
+          <circle class="dot-signal" cx="300" cy="190" r="9" />
+          <text x="0" y="246">Alerts</text>
+          <line class="rail" x1="96" y1="240" x2="400" y2="240" />
+          <circle class="dot-signal" cx="370" cy="240" r="9" />
+          <path class="wire-fault" d="M150 262V274H370V262" />
+          <text class="t-fault mid" x="260" y="298">drift</text>
+          <path class="wire-fault" d="M370 274V352" />
+          <path class="flag" d="M370 318H432L420 335L432 352H370Z" />
+          <text class="sm on-flag" x="380" y="340">prod</text>
+
+          <rect class="box" x="440" y="44" width="262" height="212" />
+          <text class="code" x="460" y="78" style="font-size:18px">PaymentInitiated</text>
+          <text class="cap xs" x="460" y="100">event schema</text>
+          <line class="rail" x1="440" y1="114" x2="702" y2="114" />
+          <text class="code cap" x="460" y="144">paymentId</text>
+          <text class="code cap" x="460" y="172">accountId</text>
+          <text class="code cap" x="460" y="200">amount</text>
+          <rect class="slice" x="450" y="214" width="242" height="32" />
+          <text class="code" x="460" y="236">purposeCode</text>
+          <text class="xs t-signal end" x="682" y="235">new</text>
+
+          <g class="fragment">
+            <text class="title cap" x="742" y="24">The meta-repo model</text>
+            <rect class="slice" x="842" y="44" width="210" height="64" />
+            <text class="lbl" x="947" y="66">Factory plan</text>
+            <text class="cap xs mid" x="947" y="93">changed once</text>
+            <path class="wire-signal" d="M947 108C947 150 790 140 790 184" marker-end="url(#ah-signal)" />
+            <path class="wire-signal" d="M947 108C947 150 894 140 894 184" marker-end="url(#ah-signal)" />
+            <path class="wire-signal" d="M947 108C947 150 998 140 998 184" marker-end="url(#ah-signal)" />
+            <path class="wire-signal" d="M947 108C947 150 1102 140 1102 184" marker-end="url(#ah-signal)" />
+            <rect class="box" x="743" y="190" width="94" height="52" />
+          <text class="lbl lbl-xs" x="790" y="216">Accounts</text>
+            <rect class="box" x="847" y="190" width="94" height="52" />
+          <text class="lbl lbl-xs" x="894" y="216">Ledger</text>
+            <rect class="box" x="951" y="190" width="94" height="52" />
+          <text class="lbl lbl-xs" x="998" y="216">Fraud</text>
+            <rect class="box" x="1055" y="190" width="94" height="52" />
+          <text class="lbl lbl-xs" x="1102" y="216">Alerts</text>
+
+            <text class="cap" x="476" y="338">Deployment order</text>
+            <line class="rail" x1="514" y1="400" x2="1110" y2="400" />
+            <path class="gate" d="M476 400L496 380L516 400L496 420Z" />
+            <text class="cap xs mid" x="496" y="446">stage gate</text>
+            <circle class="box-signal" cx="622" cy="400" r="24" />
+            <text class="lbl" x="622" y="400">1</text>
+            <text class="cap xs mid" x="622" y="446">Ledger</text>
+            <circle class="box-signal" cx="744" cy="400" r="24" />
+            <text class="lbl" x="744" y="400">2</text>
+            <text class="cap xs mid" x="744" y="446">Accounts</text>
+            <circle class="box-signal" cx="866" cy="400" r="24" />
+            <text class="lbl" x="866" y="400">3</text>
+            <text class="cap xs mid" x="866" y="446">Payments</text>
+            <circle class="box-signal" cx="988" cy="400" r="24" />
+            <text class="lbl" x="988" y="400">4</text>
+            <text class="cap xs mid" x="988" y="446">Fraud</text>
+            <circle class="box-signal" cx="1110" cy="400" r="24" />
+            <text class="lbl" x="1110" y="400">5</text>
+            <text class="cap xs mid" x="1110" y="446">Alerts</text>
+          </g>
+        </svg>
+        <aside class="notes">
+          <p><strong>9:55–10:55.</strong> Click 1: the meta-repo half and the deployment sequence, on "in the meta-repo model, that change happens once".</p>
+          <p>The second benefit is control.</p>
+          <p>Take the most common source of pain in a distributed system: a shared contract changes. A new field on an event that four services consume. In the usual model, that change is negotiated across four teams and lands in four repositories at four different times. You reconcile the drift afterwards. Usually in production.</p>
+          <p>In the meta-repo model, that change happens once, at the factory level. The factory plan reflects it. The per-service plans propagate it. Each service's implementation is derived from the same updated source. You changed one thing and the system followed.</p>
+          <p>The same holds for deployment. The factory plan carries the deployment order and the cross-service dependencies. A feature that spans five services ships as one coordinated thing in a known sequence with a stage gate before it.</p>
+        </aside>
+      </section>
+
+      <!-- 9. Benefit three: governance and traceability -->
+      <section class="s-trace">
+        <div class="top">
+          <h2>Every merged change is a breadcrumb.</h2>
+          <div class="pr-card">
+            <p class="pr-card-title">Add purpose code to payment confirmation <span>#2187</span></p>
+            <p class="pr-card-meta"><span class="badge">Merged</span> factory-bot merged 6 commits into <code>main</code> from <code>increment-14/accounts</code></p>
+            <p class="summary">Adds <code>purposeCode</code> to the PaymentInitiated consumer and the confirmation view.</p>
+            <p class="ref">Factory plan: <span class="link">FP-014, increment 14</span></p>
+            <p>Acceptance criteria: AC-31, AC-32</p>
+            <p class="checks">48 checks passed</p>
+          </div>
+        </div>
+        <div class="trail">
+          <div class="crumb">
+            <div><small>Pull request</small><span class="link">#2187</span></div>
+          </div>
+          <div class="crumb fragment">
+            <div><small>Factory plan</small><span class="link">FP-014</span></div>
+            <svg class="arrow back" viewBox="0 0 46 14"><path d="M46 7H3M10 1L3 7l7 6" /></svg>
+          </div>
+          <div class="crumb fragment">
+            <div><small>Stage gate</small><span class="link">Design, signed off</span></div>
+            <svg class="arrow back" viewBox="0 0 46 14"><path d="M46 7H3M10 1L3 7l7 6" /></svg>
+          </div>
+          <div class="crumb fragment">
+            <div><small>Acceptance criteria</small><span class="link">AC-31</span></div>
+            <svg class="arrow back" viewBox="0 0 46 14"><path d="M46 7H3M10 1L3 7l7 6" /></svg>
+          </div>
+          <div class="crumb fragment">
+            <div><small>Business requirement</small><span class="link">BR-7</span></div>
+            <svg class="arrow back" viewBox="0 0 46 14"><path d="M46 7H3M10 1L3 7l7 6" /></svg>
+          </div>
+        </div>
+        <p class="standard">
+          <span><strong>ADR-019</strong> changed once in the meta-repo</span>
+          <svg class="arrow" viewBox="0 0 46 14"><path d="M0 7h43M36 1l7 6-7 6" /></svg>
+          <span><strong>the next build on every service</strong> follows it</span>
+        </p>
+        <aside class="notes">
+          <p><strong>10:55–11:55.</strong> Clicks 1–4: the chain, link by link, as I say "to the plan… to the stage gate… to the acceptance criteria… to the business requirement".</p>
+          <p>The third benefit is the one your risk and audit functions will care about.</p>
+          <p>Every pull request the factory raises carries a reference back to the factory plan that drove it. Which means every change in production can be walked back: to the plan that coordinated it across services, to the stage gate that passed it, to the acceptance criteria that specified it, to the business requirement it came from. That isn't a report you compile after the fact. It's a property of how the work was produced.</p>
+          <p>And the standards themselves are governed the same way. The ADRs and the non-functional requirements live in the meta-repo: versioned, reviewed and applied uniformly. Change one, and the next build on every service follows it. Enforced, rather than published.</p>
+        </aside>
+      </section>
+
+      <!-- 10. The system is the unit -->
+      <section class="s-unit">
+        <h2>The system is the unit.<br />Services are instances of a pattern.</h2>
+        <svg class="dia" viewBox="0 0 1152 450" role="img" aria-label="Inside the meta-repo, one service template stamps out five services, and the factory plan composes them.">
+          <rect class="frame" x="1" y="1" width="1150" height="448" />
+          <text class="title t-signal" x="28" y="44">meta-repo</text>
+
+          <path class="wire" d="M576 112C576 170 136 160 136 218 M576 112C576 170 356 160 356 218 M576 112V218 M576 112C576 170 796 160 796 218 M576 112C576 170 1016 160 1016 218" />
+          <rect class="box" x="471" y="30" width="210" height="82" stroke-dasharray="7 5" />
+          <text class="lbl" x="576" y="58">Service template</text>
+          <path class="mark" d="M496 82h38v10h-38z M542 82h38v10h-38z M588 82h38v10h-38z M634 82h22v10h-22z" />
+
+          <rect class="box" x="46" y="220" width="180" height="86" />
+          <text class="lbl" x="136" y="250">Accounts</text>
+          <path class="mark" d="M56 276h38v10h-38z M102 276h38v10h-38z M148 276h38v10h-38z M194 276h22v10h-22z" />
+          <rect class="box" x="266" y="220" width="180" height="86" />
+          <text class="lbl" x="356" y="250">Payments</text>
+          <path class="mark" d="M276 276h38v10h-38z M322 276h38v10h-38z M368 276h38v10h-38z M414 276h22v10h-22z" />
+          <rect class="box" x="486" y="220" width="180" height="86" />
+          <text class="lbl" x="576" y="250">Ledger</text>
+          <path class="mark" d="M496 276h38v10h-38z M542 276h38v10h-38z M588 276h38v10h-38z M634 276h22v10h-22z" />
+          <rect class="box" x="706" y="220" width="180" height="86" />
+          <text class="lbl" x="796" y="250">Fraud</text>
+          <path class="mark" d="M716 276h38v10h-38z M762 276h38v10h-38z M808 276h38v10h-38z M854 276h22v10h-22z" />
+          <rect class="box" x="926" y="220" width="180" height="86" />
+          <text class="lbl" x="1016" y="250">Alerts</text>
+          <path class="mark" d="M936 276h38v10h-38z M982 276h38v10h-38z M1028 276h38v10h-38z M1074 276h22v10h-22z" />
+
+          <path class="wire-signal" d="M136 306V362 M356 306V362 M576 306V362 M796 306V362 M1016 306V362" />
+          <rect class="slice" x="46" y="362" width="1060" height="56" />
+          <text class="lbl" x="576" y="390" style="font-size:24px">Factory plan</text>
+        </svg>
+        <aside class="notes">
+          <p><strong>11:55–12:35.</strong> Summary slide. No builds.</p>
+          <p>When you add a service, it starts from a template in the meta-repo. Not from scratch, not from whichever existing service someone decided to copy. It inherits the patterns, the cross-cutting concerns, the hook configuration, the testing setup. It can't diverge on day one, which is when most divergence starts.</p>
+          <p>That's what makes this a factory rather than a collection of services that happen to talk to each other. The operational unit is the meta-repo. The services are instances of a pattern, composed according to a plan.</p>
+        </aside>
+      </section>
+
+      <!-- 11. Bounded autonomy -->
+      <section class="s-bounded">
+        <h2>Bounded autonomy</h2>
+        <svg class="dia" viewBox="0 0 1152 540" role="img" aria-label="The production line with four human-signed stage gates, and a remediation loop of three attempts that escalates to a person.">
+          <line class="rail" x1="0" y1="252" x2="1150" y2="252" marker-end="url(#ah-line)" />
+          <rect class="box" x="0" y="222" width="135" height="60" />
+          <text class="lbl lbl-sm" x="67.5" y="252">Foundations</text>
+          <rect class="box" x="151" y="222" width="135" height="60" />
+          <text class="lbl lbl-sm" x="218.5" y="252">Analyse</text>
+          <rect class="box" x="362" y="222" width="135" height="60" />
+          <text class="lbl lbl-sm" x="429.5" y="252">Design</text>
+          <rect class="box" x="573" y="222" width="135" height="60" />
+          <text class="lbl lbl-sm" x="640.5" y="252">Agentic build</text>
+          <rect class="box" x="724" y="222" width="135" height="60" />
+          <text class="lbl lbl-sm" x="791.5" y="252">Verify</text>
+          <rect class="box" x="995" y="222" width="135" height="60" />
+          <text class="lbl lbl-sm" x="1062.5" y="252">Operate</text>
+
+          <!-- Click 1: stage gates -->
+          <g class="fragment" data-fragment-index="0">
+            <path class="wire-signal" d="M0 8V20H1152V8" opacity="0.7" />
+            <text class="t-signal mid halo" x="576" y="26">Human-led, machine-assisted</text>
+
+            <use class="human" href="#human" x="128" y="44" width="32" height="32" />
+            <text class="lbl" x="144" y="98">Scope</text>
+            <text class="cond mid" x="144" y="129">Spec scorecard:</text>
+            <text class="cond mid" x="144" y="150">coverage and coherence</text>
+            <path class="wire-thin" d="M144 188V206H324V234" />
+            <path class="gate" d="M306 252L324 234L342 252L324 270Z" />
+
+            <use class="human" href="#human" x="416" y="44" width="32" height="32" />
+            <text class="lbl" x="432" y="98">Design</text>
+            <text class="cond mid" x="432" y="129">Requirements vs acceptance criteria</text>
+            <text class="cond mid" x="432" y="150">Acceptance criteria vs design</text>
+            <text class="cond mid" x="432" y="171">Design vs plans</text>
+            <path class="wire-thin" d="M432 188V206H535V234" />
+            <path class="gate" d="M517 252L535 234L553 252L535 270Z" />
+
+            <use class="human" href="#human" x="704" y="44" width="32" height="32" />
+            <text class="lbl" x="720" y="98">Verified build</text>
+            <text class="cond mid" x="720" y="129">End-to-end tests green</text>
+            <path class="wire-thin" d="M720 188V206H903V234" />
+            <path class="gate" d="M885 252L903 234L921 252L903 270Z" />
+
+            <use class="human" href="#human" x="992" y="44" width="32" height="32" />
+            <text class="lbl" x="1008" y="98">Ready for production</text>
+            <text class="cond mid" x="1008" y="129">Infrastructure green</text>
+            <text class="cond mid" x="1008" y="150">Evidence attached</text>
+            <path class="wire-thin" d="M1008 188V206H951V234" />
+            <path class="gate" d="M933 252L951 234L969 252L951 270Z" />
+          </g>
+
+          <!-- Click 2: remediation envelope -->
+          <g class="fragment" data-fragment-index="1">
+            <path class="wire-signal" d="M1062 282V312Q1062 332 1042 332H88Q68 332 68 312V290" stroke-dasharray="9 6" marker-end="url(#ah-signal)" />
+            <text class="cap sm" x="100" y="322">Three attempts to remediate</text>
+            <circle class="gate" cx="464" cy="332" r="17" />
+            <text class="lbl lbl-sm" x="464" y="332">1</text>
+            <circle class="gate" cx="520" cy="332" r="17" />
+            <text class="lbl lbl-sm" x="520" y="332">2</text>
+            <circle class="gate" cx="576" cy="332" r="17" />
+            <text class="lbl lbl-sm" x="576" y="332">3</text>
+            <line class="wire" x1="576" y1="349" x2="576" y2="392" marker-end="url(#ah-steel)" />
+            <use class="c-paper" href="#human" x="556" y="400" width="40" height="40" />
+            <text class="mid" x="576" y="470">Stop, report, escalate.</text>
+            <text class="mid" x="576" y="495">Do not push.</text>
+          </g>
+
+          <!-- Click 3: the two failure modes this rules out -->
+          <g class="fragment" data-fragment-index="2">
+            <text class="title" x="0" y="400">“Always ask”</text>
+            <text class="t-fault it" x="0" y="432" style="font-size:22px">yes ops</text>
+            <use class="c-steel" href="#human" x="226" y="356" width="48" height="48" />
+            <rect class="box" x="180" y="392" width="150" height="34" />
+            <rect class="box" x="196" y="408" width="150" height="34" />
+            <rect class="box" x="212" y="424" width="150" height="34" />
+            <rect class="box" x="228" y="440" width="150" height="34" />
+            <rect class="box" x="244" y="456" width="150" height="34" />
+            <rect class="box" x="260" y="472" width="150" height="34" />
+            <text class="cap sm" x="274" y="494">Approve?</text>
+            <text class="sm t-fault" x="362" y="494" style="font-weight:600">Yes</text>
+
+            <text class="title" x="770" y="400">“Run until it works”</text>
+            <text class="code t-fault" x="770" y="434">2,418,306 tokens</text>
+            <text class="cap sm" x="770" y="460">and rising</text>
+            <circle class="gauge" cx="1086" cy="468" r="38" />
+            <path class="gauge-hot spin" d="M1086 430A38 38 0 0 1 1124 468" />
+          </g>
+
+          <!-- Click 4: a person signs off four times -->
+          <g class="fragment signoff" data-fragment-index="3"></g>
+        </svg>
+        <aside class="notes">
+          <p><strong>12:35–15:15.</strong> Click 1: the gates, on "stage gates". Click 2: the loop, on "a defined envelope". Click 3: the two failure modes, on "that number matters". Click 4: the four human ticks light, on "a person signs off four times".</p>
+          <p>Everything so far rests on delegating work to a machine. So let me be clear about what makes delegation safe, because I know that's the question underneath all of this.</p>
+          <p>Two things.</p>
+          <p>Stage gates. There are four, and a person signs off each one: the scope, the design, the verified build, and readiness for production. Human-led, machine-assisted. Before the design is signed off, the machine checks the package for consistency: requirements against acceptance criteria, acceptance criteria against design, design against the implementation plans. Drift gets corrected upstream, so you've verified the inputs are coherent before you hand over. Before production, it assembles the evidence, and a person reads the full summary of what was built. The gates aren't overhead. They're what lets you delegate in between them.</p>
+          <p>A defined envelope. Between the gates, no agent reviews its own work; independent reviewers check it against the spec and against the engineering standards. When something fails, at any station on the line, the machine gets three attempts to remediate. If the third fails, it stops. It reports exactly what failed. It does not push. It escalates to a human rather than trying harder.</p>
+          <p>That number matters because of what it rules out at either end. "Always ask" sounds safe, and it isn't. An engineer approving every step of an autonomous build stops reading by the twentieth prompt. Approval becomes a reflex — yes ops — and the quality of the decision degrades precisely because a human is nominally making it. "Run until it works" fails the other way: an agent that never gives up will spin for hours, burning time and tokens on a problem it has already shown it can't solve. Three attempts, then escalate. The engineer isn't babysitting the build, and the build isn't running unsupervised into the ground.</p>
+          <p>So a person signs off four times. Not before every task, which would make autonomy meaningless. At the four points where accountability actually sits.</p>
+          <p>That's the machine. Autonomous where autonomy is safe. Gated where judgement is required. And the standard holds even when nobody is watching.</p>
+        </aside>
+      </section>
+
+      <!-- 12. Where it stands -->
+      <section class="s-today">
+        <h2>Operational today.</h2>
+        <div class="figures">
+          <p class="figure estimate fragment"><span>3 months</span><small>Client's own estimate</small></p>
+          <p class="figure actual fragment"><span>4 weeks</span><small>Actual</small></p>
+        </div>
+        <p class="figure-cap">Financial services proof of value, one slice of the system.</p>
+        <p class="extended fragment">Programme extended to build the whole system.</p>
+        <ol class="flow">
+          <li>Policy document</li>
+          <li aria-hidden="true"><svg class="arrow" viewBox="0 0 34 14"><path d="M0 7h31M24 1l7 6-7 6" /></svg></li>
+          <li>Product requirements</li>
+          <li aria-hidden="true"><svg class="arrow" viewBox="0 0 34 14"><path d="M0 7h31M24 1l7 6-7 6" /></svg></li>
+          <li>Acceptance criteria</li>
+          <li aria-hidden="true"><svg class="arrow" viewBox="0 0 34 14"><path d="M0 7h31M24 1l7 6-7 6" /></svg></li>
+          <li>Factory plan</li>
+          <li aria-hidden="true"><svg class="arrow" viewBox="0 0 34 14"><path d="M0 7h31M24 1l7 6-7 6" /></svg></li>
+          <li>Per-service builds</li>
+          <li aria-hidden="true"><svg class="arrow" viewBox="0 0 34 14"><path d="M0 7h31M24 1l7 6-7 6" /></svg></li>
+          <li>Verified system</li>
+        </ol>
+        <p class="trace-cap">One unbroken line of traceability</p>
+        <p class="also">Also running in UK healthcare</p>
+        <aside class="notes">
+          <p><strong>15:15–16:35.</strong> Click 1: "3 months". Click 2: "4 weeks". Click 3: the extension line, on "has since been extended". No client names.</p>
+          <p>This is operational on live engagements today. The one I can say most about is a financial services client. They scoped the proof of value at around three months of work. We delivered it in four weeks. It was a slice of the system, chosen to prove that it could be done, that the proposed architecture was sound, and that the quality met the standard a heavily regulated environment demands. Policy document and product requirements in; a working, verified slice out, with full traceability from the business requirement to the running service. That programme has since been extended to build the whole system. The same shape is running in UK healthcare.</p>
+          <p>The core loop is solid. The shift-left testing, the verification layer, the multi-service coordination through the meta-repo: working. What we're building now is everything around it. Making it easier to use. Making it easier to start, with package management for the harness itself. And reporting: where the build is up to, what's missing, who needs to act, and what it's costing in tokens.</p>
+        </aside>
+      </section>
+
+      <!-- 13. The question -->
+      <section class="s-question">
+        <h2>Do your standards exist in a form an agent can act on?</h2>
+        <div class="forms fragment">
+          <div>
+            <p class="col-head">Documents a developer might read</p>
+            <div class="intranet">
+              <p class="crumbs">Home › Engineering › Standards and policies</p>
+              <ul>
+                <li><span class="doc">Contract-first ordering</span><small>Wiki page, last edited 14 months ago</small></li>
+                <li><span class="doc">Logging and customer data</span><small>Confluence space, 37 child pages</small></li>
+                <li><span class="doc">Architecture principles v3 FINAL.pdf</span><small>PDF, 2.4 MB</small></li>
+                <li><span class="doc">Security policy overview.pptx</span><small>Slide deck, 48 slides</small></li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p class="col-head">Behaviour an agent exhibits</p>
+            <ul class="machine">
+              <li><span class="form">Steering file</span><small>Contract-first ordering</small></li>
+              <li><span class="form">Injected constraint</span><small>No customer data in logs</small></li>
+              <li><span class="form">Hook</span><small>Architecture principles</small></li>
+              <li><span class="form">Test scenario</span><small>Security policy</small></li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">
+          <p><strong>16:35–17:30.</strong> Click 1: the two columns, on "or do they exist in documents".</p>
+          <p>So here's the question I'd ask of your own organisation.</p>
+          <p>You've bought the tools. Your developers are using them. The speed is real. The question is whether you can govern it. And that comes down to one thing: do your engineering standards, your architecture decisions, your security constraints, exist in a form an agent can act on? Or do they exist in documents that a developer might read and a tool will never see?</p>
+          <p>If it's the second, you have what most organisations have today. Moving to a factory means putting your standards into the machinery. It means making the system the unit of work rather than the service. It means delegating inside gates you've already verified.</p>
+        </aside>
+      </section>
+
+      <!-- 14. Rules that say yes -->
+      <section class="s-rules">
+        <h2>Write rules that say yes.</h2>
+        <svg class="dia" viewBox="0 0 1152 500" role="img" aria-label="A small fast inner loop inside a large slow outer loop with three meeting-based gates. The gates become rules and the outer loop shrinks to match the inner one.">
+          <circle class="outer" cx="270" cy="250" r="236" />
+
+          <path class="inner" d="M302.96 179.31A78 78 0 0 1 340.69 217.04" marker-end="url(#ah-pass)" />
+          <path class="inner" d="M340.69 282.96A78 78 0 0 1 302.96 320.69" marker-end="url(#ah-pass)" />
+          <path class="inner" d="M237.04 320.69A78 78 0 0 1 199.31 282.96" marker-end="url(#ah-pass)" />
+          <path class="inner" d="M199.31 217.04A78 78 0 0 1 237.04 179.31" marker-end="url(#ah-pass)" />
+          <text class="mid halo" x="270" y="178">build</text>
+          <text class="mid halo" x="348" y="256">test</text>
+          <text class="mid halo" x="270" y="334">verify</text>
+          <text class="mid halo" x="192" y="256">repeat</text>
+
+          <g class="slow">
+            <text class="cap mid" x="270" y="66">The path to production</text>
+            <circle class="knock" cx="437" cy="83" r="28" />
+            <use class="c-paper" href="#calendar" x="419" y="65" width="36" height="36" />
+            <text x="476" y="80">Change advisory board</text>
+            <text class="t-fault it" x="476" y="104">next slot: three weeks</text>
+            <circle class="knock" cx="506" cy="250" r="28" />
+            <use class="c-paper" href="#calendar" x="488" y="232" width="36" height="36" />
+            <text x="545" y="247">Architecture review</text>
+            <text class="t-fault it" x="545" y="271">next slot: three weeks</text>
+            <circle class="knock" cx="437" cy="417" r="28" />
+            <use class="c-paper" href="#calendar" x="419" y="399" width="36" height="36" />
+            <text x="476" y="414">Threat modelling</text>
+            <text class="t-fault it" x="476" y="438">next slot: three weeks</text>
+          </g>
+
+          <g class="outer-gate">
+            <path class="gate" d="M254 132L270 116L286 132L270 148Z" />
+            <text class="sm t-signal" x="298" y="120">stage gate</text>
+          </g>
+
+          <g class="fragment rules">
+            <rect class="box" x="620" y="40" width="512" height="84" />
+            <text class="kw" x="646" y="91">IF</text>
+            <text class="rule" x="760" y="80">threat model attached</text>
+            <text class="cap sm" x="760" y="106">was a threat modelling session</text>
+
+            <rect class="box" x="620" y="140" width="512" height="84" />
+            <text class="kw" x="646" y="191">AND</text>
+            <text class="rule" x="760" y="180">ADRs honoured</text>
+            <text class="cap sm" x="760" y="206">was an architecture review</text>
+
+            <rect class="box" x="620" y="240" width="512" height="84" />
+            <text class="kw" x="646" y="291">AND</text>
+            <text class="rule" x="760" y="280">non-functional tests pass</text>
+            <text class="cap sm" x="760" y="306">was a change advisory board</text>
+
+            <rect class="ok-box" x="620" y="352" width="512" height="84" />
+            <text class="kw kw-pass" x="646" y="403">THEN</text>
+            <text class="rule" x="760" y="404">deploy</text>
+          </g>
+        </svg>
+        <aside class="notes">
+          <p><strong>17:30–18:55.</strong> Click 1: the calendars become rules and the outer loop shrinks, on "what you need are rules that let you say yes".</p>
+          <p>Which brings us to the part that gets missed. Everything I've described speeds up the inner loop: build, test, verify, repeat. It does nothing for the outer loop, which is what it takes to get that increment approved for production. The factory can sequence a deployment. It can't approve one. If a verified increment then sits waiting for the next change advisory board, or an architecture review, or a threat modelling session before it can deploy, you've burnt a lot of the gain you just made. Those gates exist for good reasons. The problem is how they're written. Most of them today are meetings that tell you what you haven't done. What you need are rules that let you say yes: if the threat model is attached and the ADRs are honoured and the non-functional tests pass, this can deploy. Written down and checked by the machine, the same as everything else. The stage gates I described earlier already work this way: the machine checks the conditions, and a person signs off. It's the standard travelling with the tooling one more time — applied to governance rather than code.</p>
+        </aside>
+      </section>
+
+      <!-- 15. Close -->
+      <section class="s-close">
+        <h2>Two things to do when you get back.</h2>
+        <ol>
+          <li>Pick your three most important engineering standards and ask where they live.</li>
+          <li>Pick your slowest gate to production and ask what it would take to write it as a rule that says yes.</li>
+        </ol>
+        <p class="refrain">Individually impressive. Collectively ungoverned.</p>
+        <aside class="notes">
+          <p><strong>18:55–19:30.</strong> No builds. This slide stays up through the sign-off and into questions.</p>
+          <p>So, two things to do when you get back. Pick your three most important engineering standards and ask where they live. Then pick your slowest gate to production and ask what it would take to write it as a rule that says yes.</p>
+          <p>I opened on a line, and I'll close on it: individually impressive, collectively ungoverned. That's the gap we built the factory to close.</p>
+          <p>I'm happy to talk about any of it.</p>
+        </aside>
+      </section>
+
+    </div>
+  </div>
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>

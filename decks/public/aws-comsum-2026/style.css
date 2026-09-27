@@ -1,0 +1,891 @@
+@import 'reveal.js/dist/reveal.css';
+@import '@fontsource-variable/inter-tight/wght.css';
+@import '@fontsource/spectral/300.css';
+@import '@fontsource/spectral/400-italic.css';
+
+/* Tokens
+   floor/panel/line: black stage, near-black fixtures, hairline greys
+   signal: the factory itself (harness, meta-repo, factory plan, gates)
+   signal-ink: the same purple, lifted so small text stays legible on black
+   pass / fault: verified vs drifting */
+:root {
+  --floor: #000000;
+  --panel: #161616;
+  --line: #616160;
+  --steel: #a2a2a0;
+  --paper: #ffffff;
+  --signal: #a100ff;
+  --signal-ink: #c58cff;
+  --signal-wash: rgba(161, 0, 255, 0.24);
+  --pass: #05f0a5;
+  --fault: #ff3246;
+
+  --sans: 'Inter Tight Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --code: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+html,
+body,
+.reveal-viewport {
+  background: var(--floor);
+}
+
+.reveal {
+  font-family: var(--sans);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--paper);
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal .slides > section {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 40px 64px;
+}
+
+.reveal h1,
+.reveal h2 {
+  font-family: var(--sans);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+  color: var(--paper);
+  text-wrap: balance;
+}
+
+.reveal h1 {
+  font-size: 100px;
+}
+
+.reveal h2 {
+  font-size: 48px;
+}
+
+.reveal p {
+  margin: 0;
+  line-height: 1.35;
+}
+
+.reveal code {
+  font-family: var(--code);
+}
+
+.reveal .controls {
+  color: var(--steel);
+}
+
+.reveal .progress {
+  height: 3px;
+  color: var(--signal);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.reveal .slide-number {
+  background: transparent;
+  color: var(--steel);
+  font-family: var(--sans);
+  font-size: 15px;
+}
+
+.defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.defs .ah-line { fill: var(--line); }
+.defs .ah-steel { fill: var(--steel); }
+.defs .ah-signal { fill: var(--signal); }
+.defs .ah-fault { fill: var(--fault); }
+.defs .ah-pass { fill: var(--pass); }
+
+.c-steel { color: var(--steel); }
+.c-paper { color: var(--paper); }
+.c-pass { color: var(--pass); }
+
+/* ---------- Diagram vocabulary (inline SVG) ---------- */
+
+.reveal svg.dia {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.dia text {
+  font-family: var(--sans);
+  font-size: 18px;
+  fill: var(--paper);
+}
+
+.dia .lbl {
+  font-weight: 500;
+  font-size: 20px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.dia .lbl-sm { font-size: 18px; }
+.dia .lbl-xs { font-size: 17px; }
+
+.dia .title {
+  font-weight: 500;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+}
+
+.dia .cap { fill: var(--steel); }
+.dia .sm { font-size: 15px; }
+.dia .xs { font-size: 13px; }
+.dia .it { font-family: var(--serif); font-style: italic; }
+.dia .mid { text-anchor: middle; }
+.dia .end { text-anchor: end; }
+.dia .code { font-family: var(--code); font-size: 16px; }
+.dia .cond { font-size: 15px; fill: var(--steel); }
+
+.dia .t-signal { fill: var(--signal-ink); }
+.dia .t-fault { fill: var(--fault); }
+.dia .t-pass { fill: var(--pass); }
+.dia .on-flag { fill: #000; font-weight: 600; }
+
+.dia .halo {
+  paint-order: stroke;
+  stroke: var(--floor);
+  stroke-width: 12px;
+  stroke-linejoin: round;
+}
+
+.dia .box {
+  fill: var(--panel);
+  stroke: var(--line);
+  stroke-width: 2;
+}
+
+.dia .box-signal {
+  fill: var(--panel);
+  stroke: var(--signal);
+  stroke-width: 2.5;
+}
+
+.dia .slice {
+  fill: var(--signal-wash);
+  stroke: var(--signal);
+  stroke-width: 2;
+}
+
+.dia .frame {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 2.5;
+}
+
+.dia .band-signal {
+  fill: rgba(161, 0, 255, 0.16);
+  stroke: var(--signal);
+  stroke-width: 2.5;
+}
+
+.dia .band-plain {
+  fill: rgba(255, 255, 255, 0.12);
+  stroke: var(--paper);
+  stroke-width: 2;
+}
+
+.dia .ok-box {
+  fill: rgba(5, 240, 165, 0.12);
+  stroke: var(--pass);
+  stroke-width: 2.5;
+}
+
+.dia .rail {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 2;
+}
+
+.dia .wire {
+  fill: none;
+  stroke: var(--steel);
+  stroke-width: 2;
+}
+
+.dia .wire-thin {
+  fill: none;
+  stroke: var(--steel);
+  stroke-width: 1.5;
+}
+
+.dia .wire-signal {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 2;
+}
+
+.dia .wire-fault {
+  fill: none;
+  stroke: var(--fault);
+  stroke-width: 2;
+}
+
+.dia .faint {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 7;
+}
+
+.dia .mark { fill: var(--steel); }
+.dia .ghost { fill: var(--steel); opacity: 0.3; }
+.dia .dot-signal { fill: var(--signal); }
+.dia .flag { fill: var(--fault); }
+.dia .knock { fill: var(--floor); }
+
+.dia .icon {
+  fill: none;
+  stroke: var(--steel);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.dia .gate {
+  fill: var(--floor);
+  stroke: var(--signal);
+  stroke-width: 2.5;
+}
+
+.dia .gauge {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 7;
+}
+
+.dia .gauge-hot {
+  fill: none;
+  stroke: var(--fault);
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.arrow path {
+  fill: none;
+  stroke: var(--steel);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dia .human {
+  color: var(--steel);
+  transition: color 0.5s ease;
+}
+
+/* ---------- 1. Title ---------- */
+
+.s-title .title-block {
+  position: absolute;
+  left: 64px;
+  right: 64px;
+  bottom: 150px;
+}
+
+.s-title h1 {
+  margin-bottom: 32px;
+}
+
+.s-title h1::after {
+  content: '>';
+  margin-left: 0.04em;
+  color: var(--signal);
+}
+
+.s-title .who {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.s-title .where {
+  margin-top: 4px;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 28px;
+  color: var(--paper);
+}
+
+.reveal .s-title .title-line {
+  position: absolute;
+  left: 64px;
+  bottom: 64px;
+  width: 1152px;
+}
+
+.s-title .title-line rect {
+  fill: var(--signal);
+}
+
+/* ---------- 2. The problem ---------- */
+
+.s-problem .tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 196px;
+  gap: 22px;
+  transition: opacity 0.5s ease;
+}
+
+.s-problem .pr {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 20px;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition-delay: calc(var(--i) * 210ms);
+}
+
+.s-problem .tiles.visible .pr {
+  opacity: 1;
+  transform: none;
+}
+
+.s-problem .pr-title {
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.s-problem .pr-num {
+  color: var(--steel);
+  font-weight: 400;
+}
+
+.s-problem .pr code {
+  display: block;
+  font-size: 15px;
+  color: var(--steel);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.s-problem .pr-ok {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: var(--pass);
+}
+
+.s-problem .pr-ok svg {
+  width: 20px;
+  height: 20px;
+  color: var(--pass);
+}
+
+/* Every tile passes; no two are built the same way. */
+.s-problem .v2 { border-radius: 16px; }
+.s-problem .v2 .pr-title { font-family: var(--code); font-size: 17px; }
+.s-problem .v3 { border-width: 0 0 0 7px; border-color: var(--steel); }
+.s-problem .v3 code { color: var(--signal-ink); }
+.s-problem .v4 { border-style: dashed; border-radius: 9px; }
+.s-problem .v4 .pr-title { font-family: var(--serif); font-weight: 300; font-size: 25px; }
+.s-problem .v5 { border-style: double; border-width: 6px; padding: 14px 16px; }
+.s-problem .v5 code { color: var(--paper); }
+.s-problem .v6 { border-color: transparent; border-radius: 11px; background: #2b2b2b; }
+.s-problem .v6 .pr-title { font-weight: 700; }
+.s-problem .v6 code { color: var(--paper); }
+
+.s-problem .verdict {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0 64px;
+  font-size: 90px;
+  line-height: 1.04;
+  transition-duration: 0.5s;
+}
+
+.s-problem:has(.verdict.visible) .tiles {
+  opacity: 0.22;
+}
+
+/* ---------- 6. The inversion ---------- */
+
+.s-inversion .it {
+  paint-order: stroke;
+  stroke: var(--floor);
+  stroke-width: 8px;
+  stroke-linejoin: round;
+}
+
+/* ---------- 9. Traceability ---------- */
+
+.s-trace .top {
+  display: grid;
+  grid-template-columns: 440px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.s-trace h2 {
+  font-size: 58px;
+  margin-top: 8px;
+}
+
+.pr-card {
+  background: var(--panel);
+  border: 2px solid var(--line);
+  padding: 28px 32px;
+  font-size: 20px;
+}
+
+.pr-card p + p {
+  margin-top: 8px;
+}
+
+.pr-card code {
+  font-size: 16px;
+  color: var(--steel);
+}
+
+.pr-card .pr-card-title {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.pr-card .pr-card-title span {
+  color: var(--steel);
+  font-weight: 400;
+}
+
+.pr-card .pr-card-meta {
+  font-size: 16px;
+  color: var(--steel);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.pr-card .badge {
+  display: inline-block;
+  padding: 1px 12px;
+  margin-right: 6px;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--floor);
+  font-weight: 600;
+}
+
+.pr-card .summary {
+  margin-top: 14px;
+}
+
+.pr-card .ref {
+  margin: 10px -12px 0;
+  padding: 6px 12px;
+  background: var(--signal-wash);
+  border-left: 4px solid var(--signal);
+}
+
+.s-trace .link {
+  color: var(--signal-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
+}
+
+.pr-card .checks {
+  color: var(--pass);
+  font-size: 16px;
+}
+
+.trail {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 56px;
+}
+
+.trail .crumb {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.trail .crumb small {
+  display: block;
+  font-size: 15px;
+  color: var(--steel);
+}
+
+.trail .crumb .link {
+  font-size: 24px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.trail .back {
+  width: 46px;
+  height: 14px;
+  flex: none;
+}
+
+.s-trace .standard {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 56px;
+  padding-top: 30px;
+  border-top: 1px solid var(--line);
+  font-size: 22px;
+  color: var(--steel);
+}
+
+.s-trace .standard strong {
+  color: var(--paper);
+  font-weight: 500;
+}
+
+.s-trace .standard svg {
+  width: 46px;
+  height: 14px;
+  flex: none;
+}
+
+/* ---------- 11. Bounded autonomy ---------- */
+
+.s-bounded h2 {
+  margin-bottom: 14px;
+}
+
+.s-bounded:has(.signoff.visible) .human {
+  color: var(--pass);
+}
+
+.s-bounded .spin {
+  transform-origin: 1086px 468px;
+  animation: spin 1.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- 12. Operational today ---------- */
+
+.s-today .figures {
+  display: flex;
+  gap: 80px;
+  align-items: flex-end;
+  height: 190px;
+}
+
+.s-today .figure {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 132px;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.s-today .figure small {
+  display: block;
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 19px;
+  letter-spacing: 0;
+  color: var(--steel);
+}
+
+.s-today .figure span {
+  position: relative;
+  display: inline-block;
+}
+
+.s-today .estimate span::after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  top: 54%;
+  height: 7px;
+  background: var(--fault);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s ease 0.15s;
+}
+
+.s-today .estimate span {
+  transition: color 0.5s ease;
+}
+
+.s-today .figures:has(.actual.visible) .estimate span {
+  color: var(--steel);
+}
+
+.s-today .figures:has(.actual.visible) .estimate span::after {
+  transform: scaleX(1);
+}
+
+.s-today .actual {
+  color: var(--signal-ink);
+}
+
+.s-today .figure-cap {
+  margin-top: 40px;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 24px;
+  color: var(--steel);
+}
+
+.s-today .extended {
+  margin-top: 20px;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 34px;
+}
+
+.s-today .flow {
+  position: absolute;
+  left: 64px;
+  right: 64px;
+  bottom: 84px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0 0 16px;
+  list-style: none;
+  font-size: 17px;
+  border-bottom: 3px solid var(--signal);
+}
+
+.s-today .flow svg {
+  width: 34px;
+  height: 14px;
+  display: block;
+}
+
+.s-today .trace-cap {
+  position: absolute;
+  left: 64px;
+  bottom: 50px;
+  font-size: 16px;
+  color: var(--signal-ink);
+}
+
+.s-today .also {
+  position: absolute;
+  right: 64px;
+  bottom: 50px;
+  font-size: 16px;
+  color: var(--steel);
+}
+
+/* ---------- 13. The question ---------- */
+
+.s-question .forms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  margin-top: 8px;
+}
+
+.s-question .col-head {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.s-question ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.s-question li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  height: 94px;
+  box-sizing: border-box;
+  padding: 0 24px;
+  line-height: 1.2;
+}
+
+/* Left column: every organisation's intranet */
+.s-question .intranet {
+  background: #e9e9e7;
+  color: #2b2b2b;
+  padding: 0 0 6px;
+}
+
+.s-question .intranet .crumbs {
+  padding: 9px 24px;
+  font-size: 14px;
+  color: #5c5c5c;
+  background: #d2d2cf;
+}
+
+.s-question .intranet li + li {
+  border-top: 1px solid #c6c6c3;
+}
+
+.s-question .intranet .doc {
+  font-size: 24px;
+  color: #1d4f9e;
+  text-decoration: underline;
+}
+
+.s-question .intranet small {
+  font-size: 16px;
+  color: #5c5c5c;
+}
+
+.s-question .machine {
+  padding-top: 37px;
+}
+
+.s-question .machine li {
+  border-left: 4px solid var(--signal);
+  background: var(--panel);
+}
+
+.s-question .machine li + li {
+  border-top: 1px solid var(--floor);
+}
+
+.s-question .machine .form {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.s-question .machine small {
+  font-size: 17px;
+  color: var(--steel);
+}
+
+/* ---------- 14. Rules that say yes ---------- */
+
+.s-rules .outer {
+  fill: none;
+  stroke: var(--steel);
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+  transform-origin: 270px 250px;
+  transition: transform 1.1s cubic-bezier(0.6, 0, 0.2, 1), stroke 1.1s ease;
+}
+
+.s-rules .inner {
+  fill: none;
+  stroke: var(--pass);
+  stroke-width: 2.5;
+}
+
+.s-rules .slow,
+.s-rules .outer-gate {
+  transition: opacity 0.5s ease;
+}
+
+.s-rules .outer-gate {
+  opacity: 0;
+}
+
+.s-rules:has(.rules.visible) .outer {
+  transform: scale(0.5);
+  stroke: var(--signal);
+}
+
+.s-rules:has(.rules.visible) .slow {
+  opacity: 0;
+}
+
+.s-rules:has(.rules.visible) .outer-gate {
+  opacity: 1;
+  transition-delay: 0.9s;
+}
+
+.s-rules .kw {
+  font-weight: 600;
+  font-size: 26px;
+  fill: var(--signal-ink);
+}
+
+.s-rules .kw-pass {
+  fill: var(--pass);
+}
+
+.s-rules .rule {
+  font-size: 27px;
+}
+
+/* ---------- 15. Close ---------- */
+
+.s-close ol {
+  margin: 64px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: todo;
+}
+
+.s-close li {
+  position: relative;
+  counter-increment: todo;
+  padding-left: 96px;
+  max-width: 1000px;
+  font-size: 36px;
+  line-height: 1.25;
+}
+
+.s-close li + li {
+  margin-top: 60px;
+}
+
+.s-close li::before {
+  content: counter(todo);
+  position: absolute;
+  left: 0;
+  top: -14px;
+  font-weight: 500;
+  font-size: 96px;
+  line-height: 1;
+  color: var(--signal);
+}
+
+.s-close .refrain {
+  position: absolute;
+  left: 64px;
+  bottom: 56px;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 26px;
+  color: var(--steel);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s-problem .pr,
+  .s-rules .outer,
+  .s-today .estimate span::after {
+    transition: none;
+  }
+
+  .s-bounded .spin {
+    animation: none;
+  }
+}
