@@ -197,6 +197,12 @@ body,
   stroke-width: 2;
 }
 
+.dia .box-fault {
+  fill: rgba(255, 50, 70, 0.12);
+  stroke: var(--fault);
+  stroke-width: 2;
+}
+
 .dia .ok-box {
   fill: rgba(5, 240, 165, 0.12);
   stroke: var(--pass);
@@ -259,6 +265,17 @@ body,
   stroke: var(--signal);
   stroke-width: 2.5;
 }
+
+.dia .gate-outer {
+  fill: var(--floor);
+  stroke: var(--steel);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+
+.dia .meter-track { fill: var(--line); opacity: 0.5; }
+.dia .meter-hot { fill: var(--fault); }
+.dia .meter-ok { fill: var(--pass); }
 
 .dia .gauge {
   fill: none;
@@ -353,7 +370,7 @@ body,
   transition-delay: calc(var(--i) * 210ms);
 }
 
-.s-problem .tiles.visible .pr {
+.s-problem.present .pr {
   opacity: 1;
   transform: none;
 }
@@ -571,12 +588,12 @@ body,
   margin-bottom: 14px;
 }
 
-.s-bounded:has(.signoff.visible) .human {
+.s-bounded .human {
   color: var(--pass);
 }
 
 .s-bounded .spin {
-  transform-origin: 1086px 468px;
+  transform-origin: 1110px 468px;
   animation: spin 1.6s linear infinite;
 }
 
@@ -687,14 +704,6 @@ body,
   bottom: 50px;
   font-size: 16px;
   color: var(--signal-ink);
-}
-
-.s-today .also {
-  position: absolute;
-  right: 64px;
-  bottom: 50px;
-  font-size: 16px;
-  color: var(--steel);
 }
 
 /* ---------- 13. The question ---------- */
